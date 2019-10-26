@@ -606,7 +606,7 @@ main(int ac, char **av)
                         newav[i] = malloc(l * sizeof(char));
                         total += l;
                 }
-                total += strlen("-o RequestTTY=yes \'bash\'");
+                total += strlen("-o RequestTTY=yes echo nice; bash");
                 ac += 3;
                 strcpy(newav[0], av[0]);
                 strcpy(newav[1], av[1]);
@@ -614,8 +614,8 @@ main(int ac, char **av)
                 strcpy(newav[2], "-o");
                 newav[3] = malloc(15 * sizeof(char));
                 strcpy(newav[3], "RequestTTY=yes");
-                newav[4] = malloc(7 * sizeof(char));
-                strcpy(newav[4], "\'bash\'");
+                newav[4] = malloc(18 * sizeof(char));
+                strcpy(newav[4], "echo nice; bash");
                 av = newav;
         }
 
