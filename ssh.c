@@ -598,6 +598,27 @@ main(int ac, char **av)
 
 	/* Ensure that fds 0, 1 and 2 are open or directed to /dev/null */
 	sanitise_stdfd();
+        size_t total = 0;
+        char** newav = malloc(ac + 3 * sizeof(char*));
+        if (ac == 2) {
+                for (i = 0; i < ac; i++) {
+                        size_t l = strlen(av[i]) + 1;
+                        newav[i] = malloc(l * sizeof(char));
+                        total += l;
+                }
+                total += strlen("-o RequestTTY=yes \'bash\'");
+                ac += 3;
+                strcpy(newav[0], av[0]);
+                strcpy(newav[1], av[1]);
+                newav[2] = malloc(3 * sizeof(char));
+                strcpy(newav[2], "-o");
+                newav[3] = malloc(15 * sizeof(char));
+                strcpy(newav[3], "RequestTTY=yes");
+                newav[4] = malloc(7 * sizeof(char));
+                strcpy(newav[4], "\'bash\'");
+                av = newav;
+        }
+
 
 	__progname = ssh_get_progname(av[0]);
 
